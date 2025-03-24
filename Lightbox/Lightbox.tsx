@@ -5,6 +5,7 @@ import PreviousButton from './PreviousButton'
 import NextButton from './NextButton'
 import DismissButton from './DismissButton'
 import Loader from './Loader'
+import { PhotoData } from '../PhotoGrid'
 
 export default function Lightbox({
   photo,
@@ -14,7 +15,7 @@ export default function Lightbox({
   onLeftClicked,
   onRightClicked,
 }: {
-  photo: string
+  photo: PhotoData
   mouseEvent: MouseEvent | null
   container: HTMLDivElement | null
   onClick: () => void
@@ -51,8 +52,8 @@ export default function Lightbox({
       }
       if (mouseEvent && mouseEvent.target) {
         // Card rotation
-        const offsetX = mouseEvent.pageX // - currentTargetRect.left
-        const offsetY = mouseEvent.pageY - window.scrollY // - currentTargetRect.top
+        const offsetX = mouseEvent.pageX
+        const offsetY = mouseEvent.pageY - window.scrollY
         const percentageLeftToRight = (offsetX / window.innerWidth) * 2 - 1
         const percentageTopToBottom = (offsetY / window.innerHeight) * 2 - 1
         setRotationX(percentageLeftToRight * 5)
@@ -78,10 +79,10 @@ export default function Lightbox({
       >
         <Image
           className="w-full h-full max-w-[80vw] max-h-[80vh] object-contain bg-transparent border-8 border-white"
-          src={photo}
+          src={photo.src}
           width={1000}
           height={1000}
-          alt={'selected photo'}
+          alt={photo.alt}
           onLoad={() => setLoading(false)}
           placeholder={'empty'}
         />

@@ -17,7 +17,7 @@ export default function PhotoGrid({ library }: { library: PhotoLibrary }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mouseEvent, setMouseEvent] = useState<MouseEvent | null>(null)
   const [selectedLibrary, setSelectedLibrary] = useState<PhotoLibrary>(library)
-  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoData | null>(null)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>(0)
 
   const debounce = useRef<boolean | null>(null)
@@ -31,7 +31,7 @@ export default function PhotoGrid({ library }: { library: PhotoLibrary }) {
           selectedLibrary.photos.length) %
         selectedLibrary.photos.length
       setCurrentPhotoIndex(newIndex)
-      setSelectedPhoto(selectedLibrary.photos[newIndex].src)
+      setSelectedPhoto(selectedLibrary.photos[newIndex])
     },
     [currentPhotoIndex, selectedPhoto]
   )
@@ -87,7 +87,7 @@ export default function PhotoGrid({ library }: { library: PhotoLibrary }) {
           height={100}
           alt={photo.alt}
           onClick={() => {
-            setSelectedPhoto(photo.src)
+            setSelectedPhoto(photo)
             setSelectedLibrary(library)
             setCurrentPhotoIndex(index)
           }}
